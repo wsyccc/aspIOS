@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		963F572C66502DEE9FCC4B59 /* Pods_faceCompare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA29B55DC24267D49874455 /* Pods_faceCompare.framework */; };
 		F2EC55381E99DCAE0024DE04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EC55371E99DCAE0024DE04 /* AppDelegate.swift */; };
 		F2EC553A1E99DCAE0024DE04 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EC55391E99DCAE0024DE04 /* ViewController.swift */; };
 		F2EC553D1E99DCAE0024DE04 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2EC553B1E99DCAE0024DE04 /* Main.storyboard */; };
@@ -15,6 +16,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0AA29B55DC24267D49874455 /* Pods_faceCompare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_faceCompare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D36C242F1CAF186DA9E2818C /* Pods-faceCompare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-faceCompare.release.xcconfig"; path = "Pods/Target Support Files/Pods-faceCompare/Pods-faceCompare.release.xcconfig"; sourceTree = "<group>"; };
 		F2EC55341E99DCAE0024DE04 /* faceCompare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = faceCompare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2EC55371E99DCAE0024DE04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2EC55391E99DCAE0024DE04 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +25,7 @@
 		F2EC553E1E99DCAE0024DE04 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F2EC55411E99DCAE0024DE04 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F2EC55431E99DCAE0024DE04 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F3693BE3BF0DABF3F746E221 /* Pods-faceCompare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-faceCompare.debug.xcconfig"; path = "Pods/Target Support Files/Pods-faceCompare/Pods-faceCompare.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,17 +33,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				963F572C66502DEE9FCC4B59 /* Pods_faceCompare.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A72FEBFF033B83413171A8ED /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				F3693BE3BF0DABF3F746E221 /* Pods-faceCompare.debug.xcconfig */,
+				D36C242F1CAF186DA9E2818C /* Pods-faceCompare.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		B4727CD6EA7B361F8DB5A2AC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0AA29B55DC24267D49874455 /* Pods_faceCompare.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		F2EC552B1E99DCAE0024DE04 = {
 			isa = PBXGroup;
 			children = (
 				F2EC55361E99DCAE0024DE04 /* faceCompare */,
 				F2EC55351E99DCAE0024DE04 /* Products */,
+				A72FEBFF033B83413171A8ED /* Pods */,
+				B4727CD6EA7B361F8DB5A2AC /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -71,9 +95,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F2EC55461E99DCAE0024DE04 /* Build configuration list for PBXNativeTarget "faceCompare" */;
 			buildPhases = (
+				41D046D1021810D0085A3910 /* [CP] Check Pods Manifest.lock */,
 				F2EC55301E99DCAE0024DE04 /* Sources */,
 				F2EC55311E99DCAE0024DE04 /* Frameworks */,
 				F2EC55321E99DCAE0024DE04 /* Resources */,
+				85032891298875B8AE061CEA /* [CP] Embed Pods Frameworks */,
+				9E8EE570240FCA9AE7327B70 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -96,7 +123,7 @@
 				TargetAttributes = {
 					F2EC55331E99DCAE0024DE04 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = N6RP3H788Z;
+						DevelopmentTeam = 45ANCL559M;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -131,6 +158,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		41D046D1021810D0085A3910 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		85032891298875B8AE061CEA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-faceCompare/Pods-faceCompare-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9E8EE570240FCA9AE7327B70 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-faceCompare/Pods-faceCompare-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F2EC55301E99DCAE0024DE04 /* Sources */ = {
@@ -257,9 +332,10 @@
 		};
 		F2EC55471E99DCAE0024DE04 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F3693BE3BF0DABF3F746E221 /* Pods-faceCompare.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = N6RP3H788Z;
+				DEVELOPMENT_TEAM = 45ANCL559M;
 				INFOPLIST_FILE = faceCompare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.bcit.faceCompare;
@@ -270,9 +346,10 @@
 		};
 		F2EC55481E99DCAE0024DE04 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D36C242F1CAF186DA9E2818C /* Pods-faceCompare.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = N6RP3H788Z;
+				DEVELOPMENT_TEAM = 45ANCL559M;
 				INFOPLIST_FILE = faceCompare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.bcit.faceCompare;
@@ -300,6 +377,7 @@
 				F2EC55481E99DCAE0024DE04 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
