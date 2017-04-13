@@ -160,6 +160,13 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
                             self.present(ac, animated: true)
                             return
                         }
+                        else if(json.count > 1){
+                            self.dismiss(animated: true, completion: nil)
+                            let ac = UIAlertController(title: "Error", message: "More than one face detected", preferredStyle: .alert)
+                            ac.addAction(UIAlertAction(title: "OK", style: .default))
+                            self.present(ac, animated: true)
+                            return
+                        }
                         let faceId = json.arrayValue[0]["faceId"].stringValue
                         self.getConfidence(faceId: faceId)
                     }
