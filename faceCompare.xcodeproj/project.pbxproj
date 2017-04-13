@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		963F572C66502DEE9FCC4B59 /* Pods_faceCompare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AA29B55DC24267D49874455 /* Pods_faceCompare.framework */; };
+		F2472D471E9DE36A0055D4B7 /* libxml2.2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F2472D3D1E9DDABD0055D4B7 /* libxml2.2.tbd */; };
+		F2472D4C1E9DE82B0055D4B7 /* AZSClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F2472D451E9DE3600055D4B7 /* AZSClient.framework */; };
 		F2EC55381E99DCAE0024DE04 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EC55371E99DCAE0024DE04 /* AppDelegate.swift */; };
 		F2EC553A1E99DCAE0024DE04 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EC55391E99DCAE0024DE04 /* ViewController.swift */; };
 		F2EC553D1E99DCAE0024DE04 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2EC553B1E99DCAE0024DE04 /* Main.storyboard */; };
@@ -18,6 +20,10 @@
 /* Begin PBXFileReference section */
 		0AA29B55DC24267D49874455 /* Pods_faceCompare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_faceCompare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D36C242F1CAF186DA9E2818C /* Pods-faceCompare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-faceCompare.release.xcconfig"; path = "Pods/Target Support Files/Pods-faceCompare/Pods-faceCompare.release.xcconfig"; sourceTree = "<group>"; };
+		F2472D3B1E9DDA550055D4B7 /* AZSClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AZSClient.framework; path = ../../../../Desktop/AZSClient.framework; sourceTree = "<group>"; };
+		F2472D3D1E9DDABD0055D4B7 /* libxml2.2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.2.tbd; path = usr/lib/libxml2.2.tbd; sourceTree = SDKROOT; };
+		F2472D451E9DE3600055D4B7 /* AZSClient.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AZSClient.framework; sourceTree = "<group>"; };
+		F2472D491E9DE5270055D4B7 /* faceCompare-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "faceCompare-Bridging-Header.h"; sourceTree = "<group>"; };
 		F2EC55341E99DCAE0024DE04 /* faceCompare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = faceCompare.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F2EC55371E99DCAE0024DE04 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F2EC55391E99DCAE0024DE04 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -33,6 +39,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F2472D4C1E9DE82B0055D4B7 /* AZSClient.framework in Frameworks */,
+				F2472D471E9DE36A0055D4B7 /* libxml2.2.tbd in Frameworks */,
 				963F572C66502DEE9FCC4B59 /* Pods_faceCompare.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,6 +60,9 @@
 		B4727CD6EA7B361F8DB5A2AC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F2472D451E9DE3600055D4B7 /* AZSClient.framework */,
+				F2472D3D1E9DDABD0055D4B7 /* libxml2.2.tbd */,
+				F2472D3B1E9DDA550055D4B7 /* AZSClient.framework */,
 				0AA29B55DC24267D49874455 /* Pods_faceCompare.framework */,
 			);
 			name = Frameworks;
@@ -84,6 +95,7 @@
 				F2EC553E1E99DCAE0024DE04 /* Assets.xcassets */,
 				F2EC55401E99DCAE0024DE04 /* LaunchScreen.storyboard */,
 				F2EC55431E99DCAE0024DE04 /* Info.plist */,
+				F2472D491E9DE5270055D4B7 /* faceCompare-Bridging-Header.h */,
 			);
 			path = faceCompare;
 			sourceTree = "<group>";
@@ -123,7 +135,7 @@
 				TargetAttributes = {
 					F2EC55331E99DCAE0024DE04 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = 45ANCL559M;
+						DevelopmentTeam = N6RP3H788Z;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -335,11 +347,19 @@
 			baseConfigurationReference = F3693BE3BF0DABF3F746E221 /* Pods-faceCompare.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 45ANCL559M;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = N6RP3H788Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					/Users/waynewang/Documents/work/IOS/faceCompare/AZSClient.framework,
+				);
 				INFOPLIST_FILE = faceCompare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.bcit.faceCompare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "faceCompare/faceCompare-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -349,11 +369,19 @@
 			baseConfigurationReference = D36C242F1CAF186DA9E2818C /* Pods-faceCompare.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				DEVELOPMENT_TEAM = 45ANCL559M;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = NO;
+				DEFINES_MODULE = NO;
+				DEVELOPMENT_TEAM = N6RP3H788Z;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					/Users/waynewang/Documents/work/IOS/faceCompare/AZSClient.framework,
+				);
 				INFOPLIST_FILE = faceCompare/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = ca.bcit.faceCompare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "faceCompare/faceCompare-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

@@ -8,7 +8,6 @@
 
 import UIKit
 import Alamofire
-import AlamofireImage
 import ImageIO
 import SwiftyJSON
 
@@ -32,12 +31,16 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
     ]
     @IBOutlet weak var upload: UIButton!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.userImage.image = sampleImage
         self.returnImage.image = sampleImage
+        self.returnImage.roundCornersForAspectFit(radius: 10.0)
+        self.userImage.roundCornersForAspectFit(radius: 10.0)
         self.imagePicker.delegate = self
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background.png")!)
+        addBackground()
     }
 
     override func didReceiveMemoryWarning() {
@@ -64,7 +67,10 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
                 view.removeFromSuperview()
             }
             self.userImage.image = sampleImage
-            uploadImageToServer()
+            self.userImage.roundCornersForAspectFit(radius: 10.0)
+            //uploadImageToServer()
+            //getPhotos()
+            connectToAzure()
         }else{
             let ac = UIAlertController(title: "Error", message: "Cannot choose!", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "OK", style: .default))
@@ -78,7 +84,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         dismiss(animated: true, completion: nil)
     }
     
-    // 1
+    /*
     func uploadImageToServer(){
         
         Alamofire.upload(multipartFormData: { multipartFormData in
@@ -128,6 +134,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
             }
         }
     }
+ */
     
     
     // 2
@@ -153,21 +160,8 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
                             self.present(ac, animated: true)
                             return
                         }
-//                        else if(json.arrayValue.count > 1){
-//                            self.dismiss(animated: true, completion: nil)
-//                            let ac = UIAlertController(title: "Notice", message: "There is multiple faces", preferredStyle: .alert)
-//                            ac.addAction(UIAlertAction(title: "OK", style: .default))
-//                            self.present(ac, animated: true)
-//                        }
                         let faceId = json.arrayValue[0]["faceId"].stringValue
                         self.getConfidence(faceId: faceId)
-                        //print(json)
-//                        for (_,subJson):(String, JSON) in json {
-//                            let faceId = subJson["faceId"].stringValue
-//                            print(faceId)
-//                            // 3
-//                            self.getConfidence(faceId: faceId)
-//                        }
                     }
                 case .failure(let encodingError):
                     self.dismiss(animated: true, completion: nil)
@@ -198,7 +192,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
                         for (_,subJson):(String, JSON) in json {
                             let confidence = subJson["confidence"].stringValue
                             let faceId = subJson["persistedFaceId"].stringValue
-                            self.getImage(confidence: confidence, faceId: faceId)
+                            self.getPhotos(confidence: confidence, faceId: faceId)
                             //print("\(faceId)")
                             //print("\(confidence)")
                         }
@@ -210,6 +204,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         }
     }
     
+    /*
     func getImage(confidence: String, faceId: String){
         
         let faceID = faceId.trimmingCharacters(in: .newlines)
@@ -234,28 +229,121 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         }
     }
     
+    */
+    
+    //5
     func loadImage(url: String, confidence: String){
-        
         let url = URL(string: url)!
-        
-        let filter = AspectScaledToFitSizeFilter(size: self.returnImage.frame.size)
-        
-        self.returnImage.af_setImage(
-            withURL: url,
-            filter: filter,
-            imageTransition: .crossDissolve(0.2)
-        )
-        
-        self.returnImage.image = self.returnImage.image?.af_imageRounded(withCornerRadius: 20)
-        
-        self.result.text = String(Int(round(Double(confidence)!*100))) + "%"
-        self.dismiss(animated: true, completion: nil)
+        print(url)
+        for view in self.returnImage.subviews {
+            view.removeFromSuperview()
+        }
+        self.returnImage.contentMode = .scaleAspectFit
+        self.returnImage.downloadedFrom(url: url)
+        //self.returnImage.roundCornersForAspectFit(radius: 10.0)
+        return
     }
     
     func CGRectMake(_ x: CGFloat, _ y: CGFloat, _ width: CGFloat, _ height: CGFloat) -> CGRect {
         return CGRect(x: x, y: y, width: width, height: height)
     }
     
+    //1
+    func connectToAzure(){
+        DispatchQueue.main.async {
+            let alert = UIAlertController(title: nil, message: "Please wait...", preferredStyle: .alert)
+            let loadingIndicator = UIActivityIndicatorView(frame: CGRect(x: 10, y: 5, width: 50, height: 50))
+            loadingIndicator.hidesWhenStopped = true
+            loadingIndicator.activityIndicatorViewStyle = UIActivityIndicatorViewStyle.gray
+            loadingIndicator.startAnimating();
+            alert.view.addSubview(loadingIndicator)
+            self.present(alert, animated: true, completion: nil)
+        }
+        
+        // If using Shared Key access, fill in your credentials here and un-comment the "UsingSAS" line:
+        let connectionString = "DefaultEndpointsProtocol=https;AccountName=facerecognize;AccountKey=hQtZBNKlvuIvEUWGlvLclZVsHzXLUx5gSbUJhIzEZTQFDV551tUtnS4Xg3a0tXtYtTj8p2SX7JFLMOnnqjt5Sw=="
+        let containerName = "photos"
+        
+        var container : AZSCloudBlobContainer
+        
+        let storageAccount : AZSCloudStorageAccount;
+        try! storageAccount = AZSCloudStorageAccount(fromConnectionString: connectionString)
+        let blobClient = storageAccount.getBlobClient()
+        container = (blobClient?.containerReference(fromName: containerName))!
+    
+        let blob = container.blockBlobReference(fromName: self.generateRandomStringWithLength(length: 6))
+        
+        var imageData = UIImageJPEGRepresentation(self.sampleImage, 0.3)
+        if(imageData == nil){
+            imageData = UIImagePNGRepresentation(self.sampleImage)
+        }
+        
+        blob.upload(from: imageData!, completionHandler: {(NSError) -> Void in
+            NSLog("Ok, uploaded !")
+            let url = blob.storageUri.primaryUri.absoluteString
+            self.sendRequest(url : url)
+        })
+        
+    }
+    
+    //4
+    func getPhotos(confidence: String, faceId: String){
+        let connectionString = "DefaultEndpointsProtocol=https;AccountName=facerecognize;AccountKey=hQtZBNKlvuIvEUWGlvLclZVsHzXLUx5gSbUJhIzEZTQFDV551tUtnS4Xg3a0tXtYtTj8p2SX7JFLMOnnqjt5Sw=="
+        let containerName = "celebrity"
+        
+        var container : AZSCloudBlobContainer
+        
+        let storageAccount : AZSCloudStorageAccount;
+        try! storageAccount = AZSCloudStorageAccount(fromConnectionString: connectionString)
+        let blobClient = storageAccount.getBlobClient()
+        container = (blobClient?.containerReference(fromName: containerName))!
+//        var faceIds : [String] = []
+//        var urls : [String] = []
+        //let queue = DispatchQueue(label: "king", qos: .utility)
+        container.listBlobsSegmented(with: nil, prefix: nil, useFlatBlobListing: true, blobListingDetails: AZSBlobListingDetails(), maxResults: 50, completionHandler:  {(error: Error?, results : AZSBlobResultSegment?) -> Void in
+            for blob in results!.blobs!
+            {
+                (blob as! AZSCloudBlob).downloadAttributes(completionHandler: {(error: Error?) in
+                    let faceID = (blob as AnyObject).metadata["faceId"]
+                    if(faceID != nil){
+                        let face = faceID as! String
+                        if(face == faceId){
+                            let url = (blob as AnyObject).storageUri.primaryUri.absoluteString
+                            //print(confidence)
+                            //print(url)
+                            DispatchQueue.main.async {
+                                self.result.text = String(Int(round(Double(confidence)!*100))) + "%"
+                                self.dismiss(animated: true, completion: nil)
+                                self.loadImage(url: url, confidence: confidence)
+                            }
+                            
+                        }
+                    }
+                })
+            }
+        })
+//        queue.async {
+//            
+//        }
+    
+//        let additionTime: DispatchTimeInterval = .seconds(2)
+//        queue.asyncAfter(deadline: .now()+additionTime){
+//            for faceId in faceIds{
+//                if(faceId["faceId"] != nil){
+//                    if(faceId["faceId"] as! String == ""){
+//                        
+//                    }
+//                }
+//                
+//            }
+//            for url in urls {
+//                print(url)
+//            }
+//        }
+
+    }
+    
+    /*
     func faceDetect(){
         let inputImage = CIImage(image: sampleImage)!
         let detector = CIDetector.init(ofType: CIDetectorTypeFace,
@@ -304,6 +392,7 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
             }
         }
     }
+ */
     
     func generateRandomStringWithLength(length: Int) -> String {
         
@@ -318,6 +407,69 @@ class ViewController: UIViewController, UINavigationControllerDelegate, UIImageP
         
         return randomString
     }
+    
+    func addBackground() {
+        // screen width and height:
+        let width = UIScreen.main.bounds.size.width
+        let height = UIScreen.main.bounds.size.height
+        
+        let imageViewBackground = UIImageView(frame: CGRectMake(0, 0, width, height))
+        imageViewBackground.image = UIImage(named: "background")
+        
+        // you can change the content mode:
+        imageViewBackground.contentMode = UIViewContentMode.scaleAspectFill
+        
+        //self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+        self.view.addSubview(imageViewBackground)
+        self.view.sendSubview(toBack: imageViewBackground)
+    }
 }
 
-
+extension UIImageView
+{
+    func roundCornersForAspectFit(radius: CGFloat)
+    {
+        if let image = self.image {
+            
+            let boundsScale = self.bounds.size.width / self.bounds.size.height
+            let imageScale = image.size.width / image.size.height
+            
+            var drawingRect : CGRect = self.bounds
+            print(boundsScale)
+            print(imageScale)
+            if boundsScale > imageScale {
+                print("视图大")
+                drawingRect.size.width =  drawingRect.size.height * imageScale
+                drawingRect.origin.x = (self.bounds.size.width - drawingRect.size.width) / 2
+            }else{
+                print("图片大")
+                drawingRect.size.height = drawingRect.size.width / imageScale
+                drawingRect.origin.y = (self.bounds.size.height - drawingRect.size.height) / 2
+            }
+            let path = UIBezierPath(roundedRect: drawingRect, cornerRadius: radius)
+            let mask = CAShapeLayer()
+            mask.path = path.cgPath
+            self.layer.mask = mask
+        }
+    }
+    
+    func downloadedFrom(url: URL) {
+        //contentMode = mode
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard
+                let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                let mimeType = response?.mimeType, mimeType.hasPrefix("image"),
+                let data = data, error == nil,
+                let image = UIImage(data: data)
+                else { return }
+            DispatchQueue.main.async() { () -> Void in
+                self.image = image
+                self.roundCornersForAspectFit(radius: 10.0)
+            }
+            }.resume()
+    }
+    func downloadedFrom(link: String) {
+        guard let url = URL(string: link) else { return }
+        downloadedFrom(url: url)
+    }
+}
